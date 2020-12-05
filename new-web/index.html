@@ -59,7 +59,6 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a class="option option-active" id="show-search">Home</a></li>
-            <li><a class="option" id="show-gallery">Gallery</a></li>
             <li><a class="option" id="show-about">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -90,33 +89,7 @@
         </div>
     </div>
 
-    <div id="gallery" class="reg-unit">
-       <div class="container">
-            <h1> Boil the Frog Gallery</h1>
-
-                <br>
-                <h2> Favorites </h2>
-                <ul class="gallery-list">
-                    <li> <a href="index.html?src=miley%20cyrus&amp;dest=miles%20davis">Miley Cyrus to Miles Davis </a>
-                    <li> <a href="index.html?src=justin%20bieber&amp;dest=jimi%20hendrix"> Justin Bieber to Jimi Hendrix </a>
-                    <li> <a href="index.html?src=Patti%20Smith&amp;dest=The%20Smiths"> Patti Smith to the Smiths</a>
-                    <li> <a href="index.html?src=elvis%20presley&amp;dest=elvis%20costello"> Elvis to Elvis</a>
-                    <li> <a href="index.html?src=carter%20family&amp;dest=rammstein"> The Carter Family to Rammstein</a>
-                    <li> <a href="index.html?src=kanye%20west&amp;dest=taylor%20swift"> Kanye West to Taylor Swift</a>
-                    <li> <a href="index.html?src=cage+the+elephant&amp;dest=john+cage"> Cage the Elephant to John Cage</a>
-                    <li> <a href="index.html?src=lorde&dest=god%20is%20an%20astronaut"> Lorde to God is an Astronaut</a>
-                    <!--
-                    <li> <a href="index.html?src=mickey%20mouse&amp;dest=deadmau5">Mickey Mouse to deadmau5</a>
-                    <li> <a href="index.html?src=righteous+brothers&amp;dest=steven+wright"> Righteous Brothers to Steven Wright</a>
-                    -->
-                </ul>
-                <h2> Recent Boil the Frogs </h2>
-                <ul class="gallery-list" id="recent-list"> </ul>
-                <h2> Popular Boil the Frogs </h2>
-                <ul class="gallery-list" id="popular-list"> </ul>
-        </div>
-    </div>
-
+   
     <div id="about" class="reg-unit">
       <div class="container">
             <h1> About Boil the Frog</h1>
@@ -726,21 +699,12 @@ function addNavigation() {
            $(this).addClass("option-active");
            $('#search').show();
            $('#main').show();
-           $('#gallery').hide();
+    
            $('#about').hide();
         }
     );
 
-    $("#show-gallery").click( 
-        function() {
-           $(".option").removeClass("option-active");
-           $(this).addClass("option-active");
-           $('#search').hide();
-           $('#main').hide();
-           $('#gallery').show();
-           $('#about').hide();
-        }
-    );
+
 
     $("#show-about").click( 
         function() {
@@ -748,7 +712,7 @@ function addNavigation() {
            $(this).addClass("option-active");
            $('#search').hide();
            $('#main').hide();
-           $('#gallery').hide();
+        
            $('#about').show();
         }
     );
