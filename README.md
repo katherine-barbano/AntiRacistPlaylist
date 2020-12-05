@@ -1,2 +1,2 @@
-# HackDuke2020
+# AntiRacistPlaylist
 Project for HackDuke2020
