@@ -883,6 +883,16 @@ function savePlaylist() {
     var w = window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
 }
 
+function spotifyAuthentication() {
+    var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
+        '&response_type=token' +
+        '&scope=playlist-read-private%20playlist-modify%20playlist-modify-private' +
+        '&redirect_uri=' + encodeURIComponent(redirect_uri);
+    localStorage.setItem('createplaylist-tracks', JSON.stringify(g_tracks));
+    localStorage.setItem('createplaylist-name', title);
+    var w = window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
+}
+
 
 function tweetSetup() {
     $(".twitter-share-button").remove();
