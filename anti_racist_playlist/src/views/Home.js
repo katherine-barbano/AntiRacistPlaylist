@@ -1,5 +1,9 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 // import sections
+
+import Routes from './../utils/Routes';
 import LandingPage from '../components/sections/LandingPage';
 import FeaturesTiles from '../components/sections/FeaturesTiles';
 import FeaturesSplit from '../components/sections/FeaturesSplit';
@@ -10,10 +14,12 @@ const Home = () => {
   
   return (
     <>
-      <LandingPage />
-      <Cta split />
+        <div className="App">
+            <LandingPage />
+        </div>
+ 
     </>
   );
 }
 
-export default Home;
+export default Home; 

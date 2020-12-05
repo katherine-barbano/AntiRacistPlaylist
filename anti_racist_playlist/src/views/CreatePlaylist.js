@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { SectionProps } from '../../utils/SectionProps';
-import Button from '../elements/Button';
-import history from '../../utils/History';
+import { SectionProps } from '../utils/SectionProps';
+import Test from '../components/sections/GenericSection';
+import Routes from './../utils/Routes';
 
 const propTypes = {
   children: PropTypes.node,
@@ -49,10 +49,8 @@ const GenericSection = ({
     >
       <div className="container">
         <div className={innerClasses}>
-          
-        <Button tag="a" color="primary" wideMobile variant="btn btn-success" onClick={() => history.push('/Home')}>
-                    Go home
-                    </Button>
+          <h1> Make a playlist here</h1>
+          <Test />
           {children}
         </div>
       </div>
