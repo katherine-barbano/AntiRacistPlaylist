@@ -85,6 +85,7 @@
                     js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                 </span>
                 <button class="btn btn-info btn-sm" id='save' type="button"  onClick='savePlaylist()'>  Save this playlist</button>
+                <button class="btn btn-info btn-sm" id='save' type="button"  onClick='savePlaylist()'>  Log in </button>
             </div>
         </div>
     </div>
@@ -884,6 +885,16 @@ function savePlaylist() {
 }
 
 function spotifyAuthentication() {
+    var client_id = '';
+    var redirect_uri = '';
+
+	if (location.host == 'localhost:8000') {
+		client_id = 'd37a9e88667b4fb3bc994299de2a52bd';
+		redirect_uri = 'http://localhost:8000/callback.html';
+	} else {
+		client_id = 'f2ebb64570a64854803bd4c1426f279a';
+		redirect_uri = 'http://boilthefrog.playlistmachinery.com/callback.html';
+	}
     var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
         '&response_type=token' +
         '&scope=playlist-read-private%20playlist-modify%20playlist-modify-private' +
