@@ -65,7 +65,7 @@ const GenericSection = ({
 
       const someString = "hackdukeyay"
 
-      spotifyAuthentication()
+     
 
       const newItem = {
         "spotify_id": someString,
@@ -105,24 +105,6 @@ const GenericSection = ({
       return stitchClient.auth.loginWithCredential(credential);
     }
 
-    function spotifyAuthentication() {
-      var title = "TestPlaylist";
-      var g_tracks = []
-
-      var client_id = '';
-      var redirect_uri = '';
-  
-      client_id = '802d7ae8caf44a2c906346486811d999';
-      redirect_uri = 'http://localhost:3000/callback.html';
-
-      var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
-          '&response_type=token' +
-          '&scope=playlist-read-private%20playlist-modify%20playlist-modify-private' +
-          '&redirect_uri=' + encodeURIComponent(redirect_uri);
-      localStorage.setItem('createplaylist-tracks', JSON.stringify(g_tracks));
-      localStorage.setItem('createplaylist-name', title);
-      var w = window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
-  }
   
 
   return (
