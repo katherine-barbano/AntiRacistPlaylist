@@ -63,18 +63,9 @@ const GenericSection = ({
         'mongodb-atlas'
       );
       // Get a hook to the employees collection
-      const contacts = mongodb.db('createdPlaylistsDatabase').collection('createdPlaylistsCollection');
-
-      const someString = "hackdukeyay"
+      const contacts = mongodb.db('createdPlaylistsDatabase').collection('finishedPlaylistsCollection');
 
      
-
-      const newItem = {
-        "spotify_id": someString,
-        "playlist_name": "Let's write",
-      };
-      
-      contacts.insertOne(newItem)
 
       return contacts.find({}, {
         // limit: 3,
@@ -91,10 +82,14 @@ const GenericSection = ({
         const tableRows = contacts.map(contact => {
           return `
             <tr>
-              <td>${contact.spotify_id}, ${contact.playlist_name}</td>
-              <td>${contact.email}</td>
-              <td>${contact.gender}</td>
-              <td>${contact.ip_address}</td>
+              <td>${contact.friend_id}</td>
+              <td>Sonata for Violin Solo No. 1 in G Minor</td>
+              <td>Violin Concerto No. 2</td>
+              <td>Another Day Of Sun</td>
+              <td>No Me Diga</td>
+              <td>City Of Stars - Hollywood Remix</td>
+              <td>Life Goes On</td>
+              <td>Drowning</td>
             </tr>
           `;
         });
@@ -118,17 +113,22 @@ const GenericSection = ({
         <div className={innerClasses}>
           <h1> Here are your playlists</h1>
           <div class='results-bar'>
-        <p>Count of Results:</p>
+        <p>Number of playlists:</p>
         <span id='num-results' class='results-bar__count'></span>
+        <h1></h1>
       </div>
   
       <table class='table table-striped'>
         <thead class='thead'>
           <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Gender</th>
-            <th>IP Address</th>
+            <th>Friend</th>
+            <th>Playlist</th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
           </tr>
         </thead>
         <tbody id='contacts'></tbody>

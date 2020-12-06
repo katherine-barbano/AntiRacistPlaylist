@@ -48,16 +48,22 @@ const Hero = ({
       <div className={innerClasses}>
         <div className="hero-content">
           <h1 className="mt-0 mb-16 reveal-from-bottom" data-reveal-delay="200">
-         <span className="text-color-primary">Welcome to AntiRacist </span>Playlist Generation Ye ye 
+         <span className="text-color-primary">Diversify </span>your Spotify.
       
           </h1>
           <div className="container-xs">
-            <p className="m-0 mb-32 reveal-from-bottom" data-reveal-delay="400">
-              Explanation for playlist creation goes here
-              </p>
             <div className="reveal-from-bottom" data-reveal-delay="600">
+            <p className="m-0 mb-32 reveal-from-bottom" data-reveal-delay="400">
+              Create playlists with friends.
+              </p>
+              <p className="m-0 mb-32 reveal-from-bottom" data-reveal-delay="400">
+              Empower diverse artists.
+              </p>
+              <p className="m-0 mb-32 reveal-from-bottom" data-reveal-delay="400">
+              Save directly to your Spotify account.
+              </p>
               <ButtonGroup>
-          
+
               <Button tag="a" color="primary" wideMobile variant="btn btn-success" onClick={() => spotifyAuthentication()}>
                     Log in to your Spotify here
                     </Button>

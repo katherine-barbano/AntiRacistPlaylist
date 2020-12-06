@@ -121,7 +121,8 @@ const GenericSection = ({
       
         {/* <label for='last_name' id="dest" > Select a second artist</label>
         <Input class='form-control' name='last_name'/> */}
-        <Input for='second name' id = "dest"> Second Artist:</Input> 
+        <label for='friend'>Choose last artist: </label>
+        <Input for='second name' id = "dest"></Input> 
           {children}
           <ButtonGroup>
           <Button tag="a" color="primary"  wideMobile variant="btn btn-success" onClick={() => clickGo($("#dest").val())}>

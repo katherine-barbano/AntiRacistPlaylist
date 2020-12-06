@@ -60,13 +60,14 @@ const GenericSection = ({
     >
       <div id="container">
         <div className={innerClasses}>
-          <h1> Make a playlist here</h1>
+          <h1> Start a playlist here</h1>
       <div class='input-form'>
         <label for='artist'>Choose an Artist</label>
         <Input class='form-control' id='artist'/>
         <label for='friend'>Choose a Friend</label>
-        <Input class='form-control' id='friend'/>     
-          <Button class="btn btn-info btn-sm" type="button"  onClick={() => {writeToDatabase($("#artist").val(),$("#friend").val())}}>  Send this root!</Button>  
+        <Input class='form-control' id='friend'/>    
+        <h1></h1> 
+          <Button class="btn btn-info btn-sm" type="button"  onClick={() => {writeToDatabase($("#artist").val(),$("#friend").val())}}>  Send this artist!</Button>  
       </div>      
           {children}
         </div>
