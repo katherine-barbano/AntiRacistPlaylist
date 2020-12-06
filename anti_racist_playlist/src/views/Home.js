@@ -5,10 +5,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import Routes from './../utils/Routes';
 import LandingPage from '../components/sections/LandingPage';
-import FeaturesTiles from '../components/sections/FeaturesTiles';
-import FeaturesSplit from '../components/sections/FeaturesSplit';
-import Testimonial from '../components/sections/Testimonial';
-import Cta from '../components/sections/Cta';
+import PlaylistCreation from '../components/sections/PlaylistCreation';
+
 
 const Home = () => {
   

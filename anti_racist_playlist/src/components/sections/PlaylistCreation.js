@@ -1,10 +1,12 @@
-<html>
-<head>
-   <link href="https://sp-bootstrap.global.ssl.fastly.net/8.2.0/sp-bootstrap.min.css" rel="stylesheet">
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js"></script>
-<script>
+import React from 'react';
+import Button from '../elements/Button';
+import $ from 'jquery';
+import { create } from 'underscore';
+window.jQuery = window.$ = require ('jquery');
+
 
 var g_access_token = '';
+var g_name = 'playlist not saved yet'
 var g_username = '';
 var g_tracks = [];
 
@@ -75,8 +77,10 @@ function addTracksToPlaylist(username, playlist, tracks, callback) {
 }
 
 function doit() {
-	// parse hash
-	var hash = location.hash.replace(/#/g, '');
+  // parse hash
+
+  var hash = window.location.hash.replace(/#/g, '');
+  console.log(hash);
 	var all = hash.split('&');
 	var args = {};
 	console.log('all', all);
@@ -87,8 +91,9 @@ function doit() {
 		args[key] = val;
 	});
 
-	g_name = localStorage.getItem('createplaylist-name');
-	g_tracks = JSON.parse(localStorage.getItem('createplaylist-tracks'));
+
+g_name = localStorage.getItem('createplaylist-name');
+  var g_tracks = JSON.parse(localStorage.getItem('createplaylist-tracks'));
 
 	console.log('got args', args);
 
@@ -117,50 +122,58 @@ function doit() {
 	});
 }
 
-</script>
-<style type="text/css">
+function savePlaylist(){
+  doit();
+  return (
+    <body>
+    <div class="container site-wrapper">
+    <div class="site-wrapper-inner">
+      <div id="creating">
+        <h1>Creating playlist...</h1>
+      </div>
+      <div id="done">
+        <h1 class='text-success' >Done!</h1>
+        <div id='info'> Playlist saved as: <div id="title" class="text-info"> </div></div>
+        <p>
+          <a class="btn btn-lg btn-primary btn-success" id="playlistlink">
+            Open playlist in Spotify
+          </a>
+        </p>
+      </div>
+      <div id="error">
+        <h1 class='text-warning' >Trouble!</h1>
+        <div id='einfo'> Trouble saving that playlist.</div>
+      </div>
+    </div>
+  </div>
+  </body>
+  )
+}
 
-	body {
-		background-color: #333;
-		color: #fff;
-        text-align:center;
-        font-size:24px;
-	}
-
-	.site-wrapper {
-        margin:20px;
-	}
 
 
-    #info {
-        margin:20px;
-        margin-top:30px;
-        margin-bottom:40px;
-    }
+const Home = () => {
+doit();
 
-</style>
-</head>
-<body onload="doit()">
-	<div class="container site-wrapper">
-		<div class="site-wrapper-inner">
-			<div id="creating" style="text-align: center;">
-				<h1>Creating playlist...</h1>
-			</div>
-			<div id="done" style="display: none;">
-				<h1 class='text-success' >Done!</h1>
-				<div id='info'> Playlist saved as: <div id="title" class="text-info"> </div></div>
-				<p>
-					<a class="btn btn-lg btn-primary btn-success" id="playlistlink">
-						Open playlist in Spotify
-					</a>
-				</p>
-			</div>
-			<div id="error" style="display: none;">
-				<h1 class='text-warning' >Trouble!</h1>
-				<div id='einfo'> Trouble saving that playlist.</div>
-			</div>
-		</div>
-	</div>
-    <script src="https://sp-bootstrap.global.ssl.fastly.net/8.2.0/sp-bootstrap.min.js"></script>
-</body>
-</html>
+  return (    
+<>
+
+    <div class="container site-wrapper">
+    <div class="site-wrapper-inner">
+  
+      <div id="done">
+        <div id='info'> Playlist saved as: <div id="title" class="text-info"> </div></div>
+        <p>
+          <a class="btn btn-lg btn-primary btn-success" id="playlistlink">
+            Open playlist in Spotify
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+      <script src="https://sp-bootstrap.global.ssl.fastly.net/8.2.0/sp-bootstrap.min.js"></script>
+</>
+  ) ;
+}
+
+export default Home; 

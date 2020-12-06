@@ -56,8 +56,6 @@ const GenericSection = ({
     >
       <div className="container">
     
-        
-      
         <div className={innerClasses}>
           <h1> Finish a playlist here</h1>
 
@@ -747,22 +745,24 @@ function savePlaylist() {
 
     var client_id = '';
     var redirect_uri = '';
+    var url = "http://localhost:3000/Save";
 
 	if (window.location.host == 'localhost:8000') {
 		client_id = 'd37a9e88667b4fb3bc994299de2a52bd';
     redirect_uri = 'http://localhost:8000/callback.html';
 	} else {
-		client_id = 'f2ebb64570a64854803bd4c1426f279a';
-    redirect_uri = 'http://boilthefrog.playlistmachinery.com/callback.html';
-	}
+		client_id = '802d7ae8caf44a2c906346486811d999';      
+    redirect_uri = url;
+    }
 
-    var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
+
+    url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
         '&response_type=token' +
         '&scope=playlist-read-private%20playlist-modify%20playlist-modify-private' +
         '&redirect_uri=' + encodeURIComponent(redirect_uri);
-    localStorage.setItem('createplaylist-tracks', JSON.stringify(g_tracks));
-    localStorage.setItem('createplaylist-name', title);
-    var w = window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
+    //localStorage.setItem('createplaylist-tracks', JSON.stringify(g_tracks));
+    //localStorage.setItem('createplaylist-name', title);
+    window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
     alert("Saved!")
 }
 

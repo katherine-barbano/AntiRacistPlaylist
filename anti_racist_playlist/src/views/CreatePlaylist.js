@@ -93,8 +93,6 @@ const GenericSection = ({
       return stitchClient.auth.loginWithCredential(credential);
     }
 
-  
-
   return (
     <section
       {...props}
@@ -107,20 +105,13 @@ const GenericSection = ({
         <label for='artist'>Choose an Artist</label>
         <Input class='form-control' name='artist'/>
         <label for='friend'>Choose a Friend</label>
-        <Input class='form-control' name='friend'/>
-      
-          <Button class="btn btn-info btn-sm" type="button"  onClick={() => {}}>  Send this root!</Button>
-  
-      </div>
-
-        
+        <Input class='form-control' name='friend'/>     
+          <Button class="btn btn-info btn-sm" type="button"  onClick={() => {}}>  Send this root!</Button>  
+      </div>      
           {children}
         </div>
         <Test />
       </div>
-    
-
-    
     </section>
   );
 }
