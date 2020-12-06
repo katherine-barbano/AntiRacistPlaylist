@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { SectionProps } from '../../utils/SectionProps';
 import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
-
+import history from '../../utils/History';
 const propTypes = {
   ...SectionProps.types
 }
@@ -56,12 +56,18 @@ const Hero = ({
                 </p>
               <div className="reveal-from-bottom" data-reveal-delay="600">
                 <ButtonGroup>
-                  <Button tag="a" color="primary" wideMobile href="https://cruip.com/">
-                    Create a Playlist
+            
+                  <Button tag="a" color="primary" wideMobile variant="btn btn-success" onClick={() => history.push('/CreatePlaylist')}>
+                    Start a playlist
                     </Button>
                   <Button tag="a" color="dark" wideMobile href="https://github.com/cruip/open-react-template/">
-                    Another Button
+                    Finish a playlist
                     </Button>
+                    <Button tag="a" color="dark" wideMobile href="https://github.com/cruip/open-react-template/">
+                    View my playlists
+                    </Button>
+                   
+
                 </ButtonGroup>
               </div>
             </div>
