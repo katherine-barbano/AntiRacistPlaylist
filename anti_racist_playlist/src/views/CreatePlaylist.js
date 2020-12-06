@@ -72,9 +72,6 @@ const GenericSection = ({
         "spotify_id": someString,
         "playlist_name": "Let's write",
       };
-      
-      contacts.insertOne(newItem)
-
       return contacts.find({}, {
         // limit: 3,
         // sort: { 'salary': -1 }

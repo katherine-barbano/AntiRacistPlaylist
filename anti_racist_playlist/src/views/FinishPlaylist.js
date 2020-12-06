@@ -7,7 +7,13 @@ import Routes from './../utils/Routes';
 import Button from './../components/elements/Button';
 import ButtonGroup from './../components/elements/ButtonGroup';
 import Input from './../components/elements/Input';
+import FormLabel from './../components/elements/FormLabel';
 import $ from 'jquery';
+import {
+    Stitch,
+    UserPasswordCredential,
+    RemoteMongoClient
+  } from "mongodb-stitch-browser-sdk";
 window.jQuery = window.$ = require('jquery');
 
 const _ = require("underscore");
@@ -49,6 +55,49 @@ const GenericSection = ({
     bottomDivider && 'has-bottom-divider'
   );
 
+  const appId = 'antiracistplaylist-qvlud';
+
+  // Get a client for your Stitch app, or instantiate a new one
+  const stitchClient = Stitch.hasAppClient(appId)
+    ? Stitch.getAppClient(appId)
+    : Stitch.initializeDefaultAppClient(appId);
+
+    login('katherine.barbano@duke.edu', 'HackDuke2020').then(() => {
+      // Initialize a MongoDB Service Client
+      const mongodb = stitchClient.getServiceClient(
+        RemoteMongoClient.factory,
+        'mongodb-atlas'
+      );
+      // Get a hook to the employees collection
+      const contacts = mongodb.db('createdPlaylistsDatabase').collection('unfinishedPlaylistsCollection');
+      
+
+      //TODO:make this specific to the account
+      return contacts.find({}, {
+        // limit: 3,
+        // sort: { 'salary': -1 }
+      })
+        .asArray();
+    })
+      .then(displayContacts)
+
+      // Renders the the contacts' information in the table
+      function displayContacts(contacts) {
+        const contactsTableBody = document.getElementById('contacts');
+        const tableRows = contacts.map(contact => {
+          return `
+            <tr>
+              <td>${contact.sender}</td>
+            </tr>
+          `;
+        });
+        contactsTableBody.innerHTML = tableRows.join('');
+      }
+  
+    function testClick(name) {
+      alert("Clicked" + name);
+    }
+
   return (
     <section
       {...props}
@@ -59,10 +108,19 @@ const GenericSection = ({
         <div className={innerClasses}>
           <h1> Finish a playlist here</h1>
 
-          <h5>You have a playlist generation request from friend X</h5>
+          <h5>You have a playlist generation request from these friends</h5>
+          <table class='table table-striped'>
+            <thead class='thead'>
+                <tr>
+                    <th>Sender</th>
+                </tr>
+            </thead>
+            <tbody id='contacts' onClick = {() => testClick(document.getElementById('contacts'))}></tbody>
+            </table>
       
-        <label for='last_name' id="dest" > Select a second artist</label>
-        <Input class='form-control' name='last_name'/>
+        {/* <label for='last_name' id="dest" > Select a second artist</label>
+        <Input class='form-control' name='last_name'/> */}
+        <Input for='second name' id = "dest"> Second Artist:</Input> 
           {children}
           <ButtonGroup>
           <Button tag="a" color="primary"  wideMobile variant="btn btn-success" onClick={() => clickGo()}>
@@ -75,6 +133,19 @@ const GenericSection = ({
         </div>
         <Test />
       </div>
+      <div class='input-form'>
+         {/* <label for='first_name' id="source" > First Artist:</label>
+        <input class='input-form' name='first_name'></input>
+        <label for='last_name' id="dest" > Second Artists:</label>
+        <input class='input-form' name='last_name'></input>  */}
+         {/* <Input for='first_name' id="source" > First Artist:</Input>
+        <Input for='second name' id = "dest"> Second Artist:</Input> 
+        <div id="xbuttons">
+                <Button class="btn btn-info btn-sm" id='save' type="button"  onClick= {() => savePlaylist()}>  Extra Button </Button>
+                 </div> */}
+         </div>
+
+
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script> 
     <script>
@@ -89,7 +160,7 @@ GenericSection.defaultProps = defaultProps;
 
 export default GenericSection;
 
-//jQuery.ajaxSettings.traditional = true; 
+window.jQuery.ajaxSettings.traditional = true; 
 var skipList = [];
 var curArtistPath = [];
 var curArtist = null;
@@ -310,7 +381,7 @@ function getPlayer(artist, allowBypass) {
         }
     );
 
-    el.find('.tooltips').tooltip({placement:'bottom', delay : 1500});
+   // el.find('.tooltips').tooltip({placement:'bottom', delay : 1500});
     return el;
 }
 
@@ -463,7 +534,7 @@ function fetchPath(source, dest) {
     ga_track('frog', 'fetchPath',  source + ' ==== ' + dest);
     var url = url_prefix + "path";
 
-    $("#xbuttons").hide();
+    //$("#xbuttons").hide();
     info("Creating path between " + source + " and " + dest);
     setURL(source, dest, skipList);
     $.getJSON(url, {src : source, dest : dest, skips:skipList.join(",")}, function(data) {
@@ -513,8 +584,7 @@ function fetchSims(artist) {
     ga_track('frog', 'fetchSims',  artist);
     var url = url_prefix + "sims";
 
-
-    $("#xbuttons").hide();
+  //  $("#xbuttons").hide();
     info("Showing near neighbors for " + artist);
     setURL(artist, "", []);
     $.getJSON(url, {artist : artist}, function(data) {
@@ -617,8 +687,41 @@ function addNavigation() {
 function clickGo() {
   clearSkips();
   generatePath();
-  alert("Worked!")
+  alert("Worked!");
+  //add new item to finished database, both directions (sender and receiver both ppl?idk)
+  login('katherine.barbano@duke.edu', 'HackDuke2020').then(() => {
+    const appId = 'antiracistplaylist-qvlud';
+    const stitchClient = Stitch.hasAppClient(appId)
+    ? Stitch.getAppClient(appId)
+    : Stitch.initializeDefaultAppClient(appId);
+        
+    // Initialize a MongoDB Service Client
+    const mongodb = stitchClient.getServiceClient(
+        RemoteMongoClient.factory,
+        'mongodb-atlas'
+      );
+  
+          // Get a hook to the employees collection
+          const finished = mongodb.db('createdPlaylistsDatabase').collection('finishedPlaylistsCollection');
+  
+          //add path in here
+          const newItem = {
+              "my_id": "my id",
+              "friend_id": "friend id",
+          };
+          finished.insertOne(newItem);
+      });
+  //delete item from unfinished database
 }
+
+function login(email, password) {
+    const appId = 'antiracistplaylist-qvlud';
+    const stitchClient = Stitch.hasAppClient(appId)
+    ? Stitch.getAppClient(appId)
+    : Stitch.initializeDefaultAppClient(appId);
+    const credential = new UserPasswordCredential(email, password);
+    return stitchClient.auth.loginWithCredential(credential);
+  }
 
 $(document).ready(
     function() {
@@ -747,15 +850,10 @@ function savePlaylist() {
     var redirect_uri = '';
     var url = "http://localhost:3000/Save";
 
-	if (window.location.host == 'localhost:8000') {
-		client_id = 'd37a9e88667b4fb3bc994299de2a52bd';
-    redirect_uri = 'http://localhost:8000/callback.html';
-	} else {
-		client_id = '802d7ae8caf44a2c906346486811d999';      
+
+	client_id = '802d7ae8caf44a2c906346486811d999';      
     redirect_uri = url;
-    }
-
-
+    
     url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
         '&response_type=token' +
         '&scope=playlist-read-private%20playlist-modify%20playlist-modify-private' +
@@ -763,25 +861,26 @@ function savePlaylist() {
     //localStorage.setItem('createplaylist-tracks', JSON.stringify(g_tracks));
     //localStorage.setItem('createplaylist-name', title);
     window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
-    alert("Saved!")
+    alert("Saved!");
 }
 
 function spotifyAuthentication() {
-    var client_id = '';
-    var redirect_uri = '';
+  var title = "TestPlaylist";
+  var g_tracks = []
 
-	if (window.location.host == 'localhost:8000') {
-		client_id = 'd37a9e88667b4fb3bc994299de2a52bd';
-		redirect_uri = 'http://localhost:8000/callback.html';
-	} else {
-		client_id = 'f2ebb64570a64854803bd4c1426f279a';
-		redirect_uri = 'http://boilthefrog.playlistmachinery.com/callback.html';
-	}
-    var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
-        '&response_type=token' +
-        '&scope=playlist-read-private%20playlist-modify%20playlist-modify-private' +
-        '&redirect_uri=' + encodeURIComponent(redirect_uri);
-    var w = window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
+  var client_id = '';
+  var redirect_uri = '';
+
+  client_id = '802d7ae8caf44a2c906346486811d999';
+  redirect_uri = 'http://localhost:3000/callback.html';
+
+  var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
+      '&response_type=token' +
+      '&scope=playlist-read-private%20playlist-modify%20playlist-modify-private' +
+      '&redirect_uri=' + encodeURIComponent(redirect_uri);
+  localStorage.setItem('createplaylist-tracks', JSON.stringify(g_tracks));
+  localStorage.setItem('createplaylist-name', title);
+  var w = window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
 }
 
 
