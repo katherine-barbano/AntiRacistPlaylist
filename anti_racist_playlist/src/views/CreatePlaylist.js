@@ -10,6 +10,9 @@ import {
   RemoteMongoClient
 } from "mongodb-stitch-browser-sdk";
 import Button from './../components/elements/Button';
+import $ from 'jquery';
+
+var artistState = "";
 
 const propTypes = {
   children: PropTypes.node,
@@ -48,6 +51,38 @@ const GenericSection = ({
     bottomDivider && 'has-bottom-divider'
   );
 
+
+
+  return (
+    <section
+      {...props}
+      className={outerClasses}
+    >
+      <div id="container">
+        <div className={innerClasses}>
+          <h1> Make a playlist here</h1>
+      <div class='input-form'>
+        <label for='artist'>Choose an Artist</label>
+        <Input class='form-control' id='artist'/>
+        <label for='friend'>Choose a Friend</label>
+        <Input class='form-control' id='friend'/>     
+          <Button class="btn btn-info btn-sm" type="button"  onClick={() => {writeToDatabase($("#artist").val(),$("#friend").val())}}>  Send this root!</Button>  
+      </div>      
+          {children}
+        </div>
+        <Test />
+      </div>
+    </section>
+  );
+}
+
+function updateInputValue(evt) {
+  console.log(evt.target.value)
+  artistState = evt.target.value;
+}
+
+function writeToDatabase(artist, friend) {
+  alert(artist+" sent to "+friend);
   const appId = 'antiracistplaylist-qvlud';
 
   // Get a client for your Stitch app, or instantiate a new one
@@ -62,55 +97,20 @@ const GenericSection = ({
         'mongodb-atlas'
       );
       // Get a hook to the employees collection
-      const contacts = mongodb.db('createdPlaylistsDatabase').collection('createdPlaylistsCollection');
-
-      const someString = "hackdukeyay"
-
-     
+      const contacts = mongodb.db('createdPlaylistsDatabase').collection('unfinishedPlaylistsCollection');
 
       const newItem = {
-        "spotify_id": someString,
-        "playlist_name": "Let's write",
+        "sender": "alex.chao",
+        "receiver": friend,
+        "sender_artist": artist,
       };
-      return contacts.find({}, {
-        // limit: 3,
-        // sort: { 'salary': -1 }
-      })
-        .asArray();
+      contacts.insertOne(newItem);
     })
-      .then(displayContacts)
-
-      // Renders the the contacts' information in the table
-      function displayContacts(contacts) {
-      
-      }
     
     function login(email, password) {
       const credential = new UserPasswordCredential(email, password);
       return stitchClient.auth.loginWithCredential(credential);
     }
-
-  return (
-    <section
-      {...props}
-      className={outerClasses}
-    >
-      <div id="container">
-        <div className={innerClasses}>
-          <h1> Make a playlist here</h1>
-      <div class='input-form'>
-        <label for='artist'>Choose an Artist</label>
-        <Input class='form-control' name='artist'/>
-        <label for='friend'>Choose a Friend</label>
-        <Input class='form-control' name='friend'/>     
-          <Button class="btn btn-info btn-sm" type="button"  onClick={() => {}}>  Send this root!</Button>  
-      </div>      
-          {children}
-        </div>
-        <Test />
-      </div>
-    </section>
-  );
 }
 
 GenericSection.propTypes = propTypes;
