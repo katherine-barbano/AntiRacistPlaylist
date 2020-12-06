@@ -7,6 +7,7 @@ import Routes from './../utils/Routes';
 import Button from './../components/elements/Button';
 import ButtonGroup from './../components/elements/ButtonGroup';
 import Input from './../components/elements/Input';
+import FormLabel from './../components/elements/FormLabel';
 import $ from 'jquery';
 import {
     Stitch,
@@ -93,6 +94,9 @@ const GenericSection = ({
         contactsTableBody.innerHTML = tableRows.join('');
       }
   
+    function testClick(name) {
+      alert("Clicked" + name);
+    }
 
   return (
     <section
@@ -113,11 +117,12 @@ const GenericSection = ({
                     <th>Sender</th>
                 </tr>
             </thead>
-            <tbody id='contacts'></tbody>
+            <tbody id='contacts' onClick = {() => testClick(document.getElementById('contacts'))}></tbody>
             </table>
       
-        <label for='last_name' id="dest" > Select a second artist</label>
-        <Input class='form-control' name='last_name'/>
+        {/* <label for='last_name' id="dest" > Select a second artist</label>
+        <Input class='form-control' name='last_name'/> */}
+        <Input for='second name' id = "dest"> Second Artist:</Input> 
           {children}
           <ButtonGroup>
           <Button tag="a" color="primary"  wideMobile variant="btn btn-success" onClick={() => clickGo()}>
@@ -130,6 +135,19 @@ const GenericSection = ({
         </div>
         <Test />
       </div>
+      <div class='input-form'>
+         {/* <label for='first_name' id="source" > First Artist:</label>
+        <input class='input-form' name='first_name'></input>
+        <label for='last_name' id="dest" > Second Artists:</label>
+        <input class='input-form' name='last_name'></input>  */}
+         {/* <Input for='first_name' id="source" > First Artist:</Input>
+        <Input for='second name' id = "dest"> Second Artist:</Input> 
+        <div id="xbuttons">
+                <Button class="btn btn-info btn-sm" id='save' type="button"  onClick= {() => savePlaylist()}>  Extra Button </Button>
+                 </div> */}
+         </div>
+
+
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script> 
     <script>
@@ -144,7 +162,7 @@ GenericSection.defaultProps = defaultProps;
 
 export default GenericSection;
 
-//jQuery.ajaxSettings.traditional = true; 
+window.jQuery.ajaxSettings.traditional = true; 
 var skipList = [];
 var curArtistPath = [];
 var curArtist = null;
@@ -365,7 +383,7 @@ function getPlayer(artist, allowBypass) {
         }
     );
 
-    el.find('.tooltips').tooltip({placement:'bottom', delay : 1500});
+   // el.find('.tooltips').tooltip({placement:'bottom', delay : 1500});
     return el;
 }
 
@@ -518,7 +536,7 @@ function fetchPath(source, dest) {
     ga_track('frog', 'fetchPath',  source + ' ==== ' + dest);
     var url = url_prefix + "path";
 
-    $("#xbuttons").hide();
+    //$("#xbuttons").hide();
     info("Creating path between " + source + " and " + dest);
     setURL(source, dest, skipList);
     $.getJSON(url, {src : source, dest : dest, skips:skipList.join(",")}, function(data) {
@@ -568,8 +586,7 @@ function fetchSims(artist) {
     ga_track('frog', 'fetchSims',  artist);
     var url = url_prefix + "sims";
 
-
-    $("#xbuttons").hide();
+  //  $("#xbuttons").hide();
     info("Showing near neighbors for " + artist);
     setURL(artist, "", []);
     $.getJSON(url, {artist : artist}, function(data) {
@@ -833,13 +850,8 @@ function savePlaylist() {
     var client_id = '';
     var redirect_uri = '';
 
-	if (window.location.host == 'localhost:8000') {
-		client_id = 'd37a9e88667b4fb3bc994299de2a52bd';
-    redirect_uri = 'http://localhost:8000/callback.html';
-	} else {
-		client_id = 'f2ebb64570a64854803bd4c1426f279a';
-    redirect_uri = 'http://boilthefrog.playlistmachinery.com/callback.html';
-	}
+    client_id = '802d7ae8caf44a2c906346486811d999';
+    redirect_uri = 'http://localhost:3000/callback.html';
 
     var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
         '&response_type=token' +
@@ -852,21 +864,22 @@ function savePlaylist() {
 }
 
 function spotifyAuthentication() {
-    var client_id = '';
-    var redirect_uri = '';
+  var title = "TestPlaylist";
+  var g_tracks = []
 
-	if (window.location.host == 'localhost:8000') {
-		client_id = 'd37a9e88667b4fb3bc994299de2a52bd';
-		redirect_uri = 'http://localhost:8000/callback.html';
-	} else {
-		client_id = 'f2ebb64570a64854803bd4c1426f279a';
-		redirect_uri = 'http://boilthefrog.playlistmachinery.com/callback.html';
-	}
-    var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
-        '&response_type=token' +
-        '&scope=playlist-read-private%20playlist-modify%20playlist-modify-private' +
-        '&redirect_uri=' + encodeURIComponent(redirect_uri);
-    var w = window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
+  var client_id = '';
+  var redirect_uri = '';
+
+  client_id = '802d7ae8caf44a2c906346486811d999';
+  redirect_uri = 'http://localhost:3000/callback.html';
+
+  var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
+      '&response_type=token' +
+      '&scope=playlist-read-private%20playlist-modify%20playlist-modify-private' +
+      '&redirect_uri=' + encodeURIComponent(redirect_uri);
+  localStorage.setItem('createplaylist-tracks', JSON.stringify(g_tracks));
+  localStorage.setItem('createplaylist-name', title);
+  var w = window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
 }
 
 
