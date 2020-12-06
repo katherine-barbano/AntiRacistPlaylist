@@ -69,6 +69,7 @@ const GenericSection = ({
       );
       // Get a hook to the employees collection
       const contacts = mongodb.db('createdPlaylistsDatabase').collection('unfinishedPlaylistsCollection');
+      
 
       //TODO:make this specific to the account
       return contacts.find({}, {
@@ -91,11 +92,6 @@ const GenericSection = ({
         });
         contactsTableBody.innerHTML = tableRows.join('');
       }
-    
-    function login(email, password) {
-      const credential = new UserPasswordCredential(email, password);
-      return stitchClient.auth.loginWithCredential(credential);
-    }
   
 
   return (
@@ -676,8 +672,40 @@ function addNavigation() {
 function clickGo() {
   clearSkips();
   generatePath();
-  alert("Worked!")
+  alert("Worked!");
+  //add new item to finished database, both directions (sender and receiver both ppl?idk)
+  login('katherine.barbano@duke.edu', 'HackDuke2020').then(() => {
+    const appId = 'antiracistplaylist-qvlud';
+    const stitchClient = Stitch.hasAppClient(appId)
+    ? Stitch.getAppClient(appId)
+    : Stitch.initializeDefaultAppClient(appId);
+        
+    // Initialize a MongoDB Service Client
+    const mongodb = stitchClient.getServiceClient(
+        RemoteMongoClient.factory,
+        'mongodb-atlas'
+      );
+  
+          // Get a hook to the employees collection
+          const finished = mongodb.db('createdPlaylistsDatabase').collection('finishedPlaylistsCollection');
+  
+          const newItem = {
+              "my_id": "my id",
+              "friend_id": "friend id",
+          };
+          finished.insertOne(newItem);
+      });
+  //delete item from unfinished database
 }
+
+function login(email, password) {
+    const appId = 'antiracistplaylist-qvlud';
+    const stitchClient = Stitch.hasAppClient(appId)
+    ? Stitch.getAppClient(appId)
+    : Stitch.initializeDefaultAppClient(appId);
+    const credential = new UserPasswordCredential(email, password);
+    return stitchClient.auth.loginWithCredential(credential);
+  }
 
 $(document).ready(
     function() {
