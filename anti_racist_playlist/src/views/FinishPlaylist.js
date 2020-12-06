@@ -6,6 +6,11 @@ import Test from '../components/sections/GenericSection';
 import Routes from './../utils/Routes';
 import Button from './../components/elements/Button';
 import $ from 'jquery';
+import {
+    Stitch,
+    UserPasswordCredential,
+    RemoteMongoClient
+  } from "mongodb-stitch-browser-sdk";
 window.jQuery = window.$ = require('jquery');
 
 const _ = require("underscore");
@@ -47,6 +52,50 @@ const GenericSection = ({
     bottomDivider && 'has-bottom-divider'
   );
 
+  const appId = 'antiracistplaylist-qvlud';
+
+  // Get a client for your Stitch app, or instantiate a new one
+  const stitchClient = Stitch.hasAppClient(appId)
+    ? Stitch.getAppClient(appId)
+    : Stitch.initializeDefaultAppClient(appId);
+
+    login('katherine.barbano@duke.edu', 'HackDuke2020').then(() => {
+      // Initialize a MongoDB Service Client
+      const mongodb = stitchClient.getServiceClient(
+        RemoteMongoClient.factory,
+        'mongodb-atlas'
+      );
+      // Get a hook to the employees collection
+      const contacts = mongodb.db('createdPlaylistsDatabase').collection('unfinishedPlaylistsCollection');
+
+      //TODO:make this specific to the account
+      return contacts.find({}, {
+        // limit: 3,
+        // sort: { 'salary': -1 }
+      })
+        .asArray();
+    })
+      .then(displayContacts)
+
+      // Renders the the contacts' information in the table
+      function displayContacts(contacts) {
+        const contactsTableBody = document.getElementById('contacts');
+        const tableRows = contacts.map(contact => {
+          return `
+            <tr>
+              <td>${contact.sender}</td>
+            </tr>
+          `;
+        });
+        contactsTableBody.innerHTML = tableRows.join('');
+      }
+    
+    function login(email, password) {
+      const credential = new UserPasswordCredential(email, password);
+      return stitchClient.auth.loginWithCredential(credential);
+    }
+  
+
   return (
     <section
       {...props}
@@ -57,6 +106,18 @@ const GenericSection = ({
           <h1> Finish a playlist here</h1>
           <Test />
           {children}
+          <table class='table table-striped'>
+            <thead class='thead'>
+                <tr>
+                    <th>Sender</th>
+                </tr>
+            </thead>
+            <tbody id='contacts'></tbody>
+            </table>
+            <div class='input-form'>
+        <label for='last_name' id="dest" > Your Artist:</label>
+        <input class='form-control' name='last_name'></input>
+         </div>
           <Button tag="a" color="primary"  wideMobile variant="btn btn-success" onClick={() => clickGo()}>
                     Generate Songs! 
                     </Button>
@@ -65,12 +126,6 @@ const GenericSection = ({
           
         </div>
       </div>
-      <div class='input-form'>
-        <label for='first_name' id="source" > First Artist:</label>
-        <input class='form-control' name='first_name'></input>
-        <label for='last_name' id="dest" > Second Artists:</label>
-        <input class='form-control' name='last_name'></input>
-         </div>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script> 
     <script>

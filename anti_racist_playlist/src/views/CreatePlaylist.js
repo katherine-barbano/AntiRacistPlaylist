@@ -71,9 +71,6 @@ const GenericSection = ({
         "spotify_id": someString,
         "playlist_name": "Let's write",
       };
-      
-      contacts.insertOne(newItem)
-
       return contacts.find({}, {
         // limit: 3,
         // sort: { 'salary': -1 }
@@ -121,7 +118,7 @@ const GenericSection = ({
           '&redirect_uri=' + encodeURIComponent(redirect_uri);
       localStorage.setItem('createplaylist-tracks', JSON.stringify(g_tracks));
       localStorage.setItem('createplaylist-name', title);
-      var w = window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
+      //var w = window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
   }
   
 
