@@ -1,10 +1,14 @@
 # AntiRacistPlaylist
 
-Project for HackDuke2020 
+Project for HackDuke2020 - Inequality Track
 
 Alex Chao, Priya Rathinavelu, Katherine Barbano
 
 ## Overview
+
+This app, titled Diversify Your Spotify, serves to help users discover more underrepresented artists, which is especially difficult given the current xenophobia and discrimination within the music industry. This web app allows a user to create a playlist with a friend by logging into their spotify account, entering a specific artist, and sending it to their friend. The friend can see who sent them the request to finish a playlist, but they won’t be able to see who the artist was. Once the friend enters in their own artist, the app generates a playlist that slowly transitions between the two songs while inserting in underrepresented artists. 
+
+This app is based on the design of Boil the Frog, which can create a playlist transitioning between two different artists. We expanded on this to allow friend collaboration and to spotlight underrepresented artists. We used React to build the web app, as well as MongoDB for storing information in the database. This app also utilizes the Spotify web developer API for account authentication and to save playlists. 
 
 ## Usage
 
