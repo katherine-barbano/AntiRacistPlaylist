@@ -9,6 +9,11 @@ import ButtonGroup from './../components/elements/ButtonGroup';
 import Input from './../components/elements/Input';
 import FormLabel from './../components/elements/FormLabel';
 import $ from 'jquery';
+import {
+    Stitch,
+    UserPasswordCredential,
+    RemoteMongoClient
+  } from "mongodb-stitch-browser-sdk";
 window.jQuery = window.$ = require('jquery');
 
 const _ = require("underscore");
@@ -50,6 +55,50 @@ const GenericSection = ({
     bottomDivider && 'has-bottom-divider'
   );
 
+  const appId = 'antiracistplaylist-qvlud';
+
+  // Get a client for your Stitch app, or instantiate a new one
+  const stitchClient = Stitch.hasAppClient(appId)
+    ? Stitch.getAppClient(appId)
+    : Stitch.initializeDefaultAppClient(appId);
+
+    login('katherine.barbano@duke.edu', 'HackDuke2020').then(() => {
+      // Initialize a MongoDB Service Client
+      const mongodb = stitchClient.getServiceClient(
+        RemoteMongoClient.factory,
+        'mongodb-atlas'
+      );
+      // Get a hook to the employees collection
+      const contacts = mongodb.db('createdPlaylistsDatabase').collection('unfinishedPlaylistsCollection');
+
+      //TODO:make this specific to the account
+      return contacts.find({}, {
+        // limit: 3,
+        // sort: { 'salary': -1 }
+      })
+        .asArray();
+    })
+      .then(displayContacts)
+
+      // Renders the the contacts' information in the table
+      function displayContacts(contacts) {
+        const contactsTableBody = document.getElementById('contacts');
+        const tableRows = contacts.map(contact => {
+          return `
+            <tr>
+              <td>${contact.sender}</td>
+            </tr>
+          `;
+        });
+        contactsTableBody.innerHTML = tableRows.join('');
+      }
+    
+    function login(email, password) {
+      const credential = new UserPasswordCredential(email, password);
+      return stitchClient.auth.loginWithCredential(credential);
+    }
+  
+
   return (
     <section
       {...props}
@@ -62,7 +111,15 @@ const GenericSection = ({
         <div className={innerClasses}>
           <h1> Finish a playlist here</h1>
 
-          <h5>You have a playlist generation request from friend X</h5>
+          <h5>You have a playlist generation request from these friends</h5>
+          <table class='table table-striped'>
+            <thead class='thead'>
+                <tr>
+                    <th>Sender</th>
+                </tr>
+            </thead>
+            <tbody id='contacts'></tbody>
+            </table>
       
         {/* <label for='last_name' id="dest" > Select a second artist</label>
         <Input class='form-control' name='last_name'/> */}
