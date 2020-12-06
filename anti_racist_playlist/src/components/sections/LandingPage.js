@@ -60,10 +60,10 @@ const Hero = ({
                   <Button tag="a" color="primary" wideMobile variant="btn btn-success" onClick={() => history.push('/CreatePlaylist')}>
                     Start a playlist
                     </Button>
-                  <Button tag="a" color="dark" wideMobile href="https://github.com/cruip/open-react-template/">
+                  <Button tag="a" color="dark" wideMobile variant="btn btn-success" onClick={() => history.push('/FinishPlaylist')}>
                     Finish a playlist
                     </Button>
-                    <Button tag="a" color="dark" wideMobile href="https://github.com/cruip/open-react-template/">
+                    <Button tag="a" color="dark" wideMobile variant="btn btn-success" onClick={() => history.push('/Playlists')}>
                     View my playlists
                     </Button>
                    
