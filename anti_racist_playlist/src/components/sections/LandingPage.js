@@ -4,6 +4,7 @@ import { SectionProps } from '../../utils/SectionProps';
 import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
 import history from '../../utils/History';
+
 const propTypes = {
   ...SectionProps.types
 }
