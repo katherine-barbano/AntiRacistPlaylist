@@ -5,6 +5,8 @@ import { SectionProps } from '../utils/SectionProps';
 import Test from '../components/sections/GenericSection';
 import Routes from './../utils/Routes';
 import Button from './../components/elements/Button';
+import ButtonGroup from './../components/elements/ButtonGroup';
+import Input from './../components/elements/Input';
 import $ from 'jquery';
 import {
     Stitch,
@@ -102,10 +104,13 @@ const GenericSection = ({
       className={outerClasses}
     >
       <div className="container">
+    
+        
+      
         <div className={innerClasses}>
           <h1> Finish a playlist here</h1>
-          <Test />
-          {children}
+
+          <h5>You have a playlist generation request from these friends</h5>
           <table class='table table-striped'>
             <thead class='thead'>
                 <tr>
@@ -114,17 +119,20 @@ const GenericSection = ({
             </thead>
             <tbody id='contacts'></tbody>
             </table>
-            <div class='input-form'>
-        <label for='last_name' id="dest" > Your Artist:</label>
-        <input class='form-control' name='last_name'></input>
-         </div>
+      
+        <label for='last_name' id="dest" > Select a second artist</label>
+        <Input class='form-control' name='last_name'/>
+          {children}
+          <ButtonGroup>
           <Button tag="a" color="primary"  wideMobile variant="btn btn-success" onClick={() => clickGo()}>
                     Generate Songs! 
                     </Button>
           <Button class="btn btn-info btn-sm" type="button"  onClick={() => savePlaylist()}>  Save this playlist</Button>
+          </ButtonGroup>
  
           
         </div>
+        <Test />
       </div>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script> 
