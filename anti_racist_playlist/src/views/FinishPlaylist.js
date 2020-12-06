@@ -706,6 +706,7 @@ function clickGo() {
           // Get a hook to the employees collection
           const finished = mongodb.db('createdPlaylistsDatabase').collection('finishedPlaylistsCollection');
   
+          //add path in here
           const newItem = {
               "my_id": "my id",
               "friend_id": "friend id",
