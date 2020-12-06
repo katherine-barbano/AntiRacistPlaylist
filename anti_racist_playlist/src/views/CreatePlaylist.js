@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { SectionProps } from '../utils/SectionProps';
 import Test from '../components/sections/GenericSection';
-import Helmet from "react-helmet";
-import useScript from './useScript';
 import {
   Stitch,
   UserPasswordCredential,
