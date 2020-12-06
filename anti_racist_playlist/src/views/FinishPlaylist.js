@@ -98,6 +98,9 @@ const GenericSection = ({
       return stitchClient.auth.loginWithCredential(credential);
     }
   
+    function testClick(name) {
+      alert("Clicked" + name);
+    }
 
   return (
     <section
@@ -118,7 +121,7 @@ const GenericSection = ({
                     <th>Sender</th>
                 </tr>
             </thead>
-            <tbody id='contacts'></tbody>
+            <tbody id='contacts' onClick = {() => testClick(document.getElementById('contacts'))}></tbody>
             </table>
       
         {/* <label for='last_name' id="dest" > Select a second artist</label>
