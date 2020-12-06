@@ -5,8 +5,13 @@ import { SectionProps } from '../utils/SectionProps';
 import Test from '../components/sections/GenericSection';
 import Routes from './../utils/Routes';
 import Button from './../components/elements/Button';
+<<<<<<< HEAD
 import Input from './../components/elements/Input';
 import FormLabel from './../components/elements/FormLabel';
+=======
+import ButtonGroup from './../components/elements/ButtonGroup';
+import Input from './../components/elements/Input';
+>>>>>>> a8fd1be5a30262178b174348ae92651dca7bb1d4
 import $ from 'jquery';
 window.jQuery = window.$ = require('jquery');
 
@@ -55,18 +60,29 @@ const GenericSection = ({
       className={outerClasses}
     >
       <div className="container">
+    
+        
+      
         <div className={innerClasses}>
           <h1> Finish a playlist here</h1>
-          <Test />
+
+          <h5>You have a playlist generation request from friend X</h5>
+      
+        <label for='last_name' id="dest" > Select a second artist</label>
+        <Input class='form-control' name='last_name'/>
           {children}
+          <ButtonGroup>
           <Button tag="a" color="primary"  wideMobile variant="btn btn-success" onClick={() => clickGo()}>
                     Generate Songs! 
                     </Button>
           <Button class="btn btn-info btn-sm" type="button"  onClick={() => savePlaylist()}>  Save this playlist</Button>
+          </ButtonGroup>
  
           
         </div>
+        <Test />
       </div>
+<<<<<<< HEAD
       <div class='input-form'>
         {/* <label for='first_name' id="source" > First Artist:</label>
         <input class='input-form' name='first_name'></input>
@@ -80,6 +96,8 @@ const GenericSection = ({
          </div>
 
 
+=======
+>>>>>>> a8fd1be5a30262178b174348ae92651dca7bb1d4
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script> 
     <script>

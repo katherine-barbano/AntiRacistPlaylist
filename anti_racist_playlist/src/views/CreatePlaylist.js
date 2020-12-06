@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { SectionProps } from '../utils/SectionProps';
 import Test from '../components/sections/GenericSection';
+import Input from '.././components/elements/Input';
 import {
   Stitch,
   UserPasswordCredential,
   RemoteMongoClient
 } from "mongodb-stitch-browser-sdk";
-import Routes from './../utils/Routes';
+import Button from './../components/elements/Button';
 
 const propTypes = {
   children: PropTypes.node,
@@ -65,7 +66,7 @@ const GenericSection = ({
 
       const someString = "hackdukeyay"
 
-      spotifyAuthentication()
+     
 
       const newItem = {
         "spotify_id": someString,
@@ -84,20 +85,7 @@ const GenericSection = ({
 
       // Renders the the contacts' information in the table
       function displayContacts(contacts) {
-        const contactsTableBody = document.getElementById('contacts');
-        const numResultsEl = document.getElementById('num-results');
-        const tableRows = contacts.map(contact => {
-          return `
-            <tr>
-              <td>${contact.spotify_id}, ${contact.playlist_name}</td>
-              <td>${contact.email}</td>
-              <td>${contact.gender}</td>
-              <td>${contact.ip_address}</td>
-            </tr>
-          `;
-        });
-        contactsTableBody.innerHTML = tableRows.join('');
-        numResultsEl.innerHTML = contacts.length;
+      
       }
     
     function login(email, password) {
@@ -105,24 +93,6 @@ const GenericSection = ({
       return stitchClient.auth.loginWithCredential(credential);
     }
 
-    function spotifyAuthentication() {
-      var title = "TestPlaylist";
-      var g_tracks = []
-
-      var client_id = '';
-      var redirect_uri = '';
-  
-      client_id = '802d7ae8caf44a2c906346486811d999';
-      redirect_uri = 'http://localhost:3000/callback.html';
-
-      var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id +
-          '&response_type=token' +
-          '&scope=playlist-read-private%20playlist-modify%20playlist-modify-private' +
-          '&redirect_uri=' + encodeURIComponent(redirect_uri);
-      localStorage.setItem('createplaylist-tracks', JSON.stringify(g_tracks));
-      localStorage.setItem('createplaylist-name', title);
-      var w = window.open(url, 'asdf', 'WIDTH=400,HEIGHT=500');
-  }
   
 
   return (
@@ -133,36 +103,24 @@ const GenericSection = ({
       <div id="container">
         <div className={innerClasses}>
           <h1> Make a playlist here</h1>
-          <Test />
-          {children}
-        </div>
+      <div class='input-form'>
+        <label for='artist'>Choose an Artist</label>
+        <Input class='form-control' name='artist'/>
+        <label for='friend'>Choose a Friend</label>
+        <Input class='form-control' name='friend'/>
+      
+          <Button class="btn btn-info btn-sm" type="button"  onClick={() => {}}>  Send this root!</Button>
+  
       </div>
 
-      <div class='results-bar'>
-        <p>Count of Results:</p>
-        <span id='num-results' class='results-bar__count'></span>
+        
+          {children}
+        </div>
+        <Test />
       </div>
-      <div class='input-form'>
-        <label for='first_name'>First Name:</label>
-        <input class='form-control' name='first_name'></input>
-        <label for='last_name'>Last Name:</label>
-        <input class='form-control' name='last_name'></input>
-        <label for='email'>Email:</label>
-        <input class='form-control' name='email'></input>
-        <label for='ip_address'>IP Address:</label>
-        <input class='form-control' name='ip_address'></input>
-      </div>
-      <table class='table table-striped'>
-        <thead class='thead'>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Gender</th>
-            <th>IP Address</th>
-          </tr>
-        </thead>
-        <tbody id='contacts'></tbody>
-      </table>
+    
+
+    
     </section>
   );
 }

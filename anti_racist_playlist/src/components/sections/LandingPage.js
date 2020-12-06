@@ -46,16 +46,7 @@ const Hero = ({
     >
       <div className="container-sm">
         <div className={innerClasses}>
-          <div className="hero-content">
-            <h1 className="mt-0 mb-16 reveal-from-bottom" data-reveal-delay="200">
-           <span className="text-color-primary">AntiRacist </span>Playlist Generation Ye ye 
-        
-            </h1>
-            <div className="container-xs">
-              <p className="m-0 mb-32 reveal-from-bottom" data-reveal-delay="400">
-                Explanation for playlist creation goes here
-                </p>
-              <div className="reveal-from-bottom" data-reveal-delay="600">
+       
                 <ButtonGroup>
             
                   <Button tag="a" color="primary" wideMobile variant="btn btn-success" onClick={() => history.push('/CreatePlaylist')}>
@@ -67,12 +58,10 @@ const Hero = ({
                     <Button tag="a" color="dark" wideMobile variant="btn btn-success" onClick={() => history.push('/Playlists')}>
                     View my playlists
                     </Button>
-                  
+                
 
                 </ButtonGroup>
-              </div>
-            </div>
-          </div>
+            
          </div>
       </div>
     </section>
@@ -83,5 +72,3 @@ Hero.propTypes = propTypes;
 Hero.defaultProps = defaultProps;
 
 export default Hero;
-
-
