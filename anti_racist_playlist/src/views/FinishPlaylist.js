@@ -14,6 +14,7 @@ import {
     UserPasswordCredential,
     RemoteMongoClient
   } from "mongodb-stitch-browser-sdk";
+import { forEach } from 'lodash';
 window.jQuery = window.$ = require('jquery');
 
 const _ = require("underscore");
@@ -123,7 +124,7 @@ const GenericSection = ({
         <Input for='second name' id = "dest"> Second Artist:</Input> 
           {children}
           <ButtonGroup>
-          <Button tag="a" color="primary"  wideMobile variant="btn btn-success" onClick={() => clickGo()}>
+          <Button tag="a" color="primary"  wideMobile variant="btn btn-success" onClick={() => clickGo($("#dest").val())}>
                     Generate Songs! 
                     </Button>
           <Button class="btn btn-info btn-sm" type="button"  onClick={() => savePlaylist()}>  Save this playlist</Button>
@@ -280,6 +281,8 @@ function minimizeEnergyChange() {
 function generatePath() {
     var source = $("#source").val();
     var dest = $("#dest").val();
+    source = "Weezer";
+    dest = "LadyGaga";
     if (dest.length === 0) {
         fetchSims(source);
     } else {
@@ -482,6 +485,7 @@ function showPlaylist(path) {
             showPlayer(artist, bypass); 
         }
     );
+
 }
 
 function getCurTrack(artist) {
@@ -546,6 +550,7 @@ function fetchPath(source, dest) {
                 var msg = 'Found a path from ' + data.path[0].name + ' to ' + data.path[data.path.length -1].name + ' in ' 
                     + data.path.length + ' tracks. '  
                 info(msg);
+                modifyDatabases(curArtistPath);
                 showPath(curArtistPath);
                 let firstArtist = curArtistPath[0].name;
                 let lastArtist = curArtistPath[curArtistPath.length - 1].name;
@@ -560,6 +565,47 @@ function fetchPath(source, dest) {
         }
     );
 }
+
+function modifyDatabases(path) {
+      //add new item to finished database, both directions (sender and receiver both ppl?idk)
+  login('katherine.barbano@duke.edu', 'HackDuke2020').then(() => {
+    const appId = 'antiracistplaylist-qvlud';
+    const stitchClient = Stitch.hasAppClient(appId)
+    ? Stitch.getAppClient(appId)
+    : Stitch.initializeDefaultAppClient(appId);
+        
+    // Initialize a MongoDB Service Client
+    const mongodb = stitchClient.getServiceClient(
+        RemoteMongoClient.factory,
+        'mongodb-atlas'
+      );
+  
+          // Get a hook to the employees collection
+          const finished = mongodb.db('createdPlaylistsDatabase').collection('finishedPlaylistsCollection');
+
+
+          var pathArr = [];
+          for (var i = 0; i < path.length; i++) {
+            pathArr.push(path[i].name);
+        } 
+
+          
+
+          //add path in here
+          const newItem = {
+              "my_id": "katherine.barbano",
+              "friend_id": "alex.chao",
+              "path": pathArr
+          };
+          finished.insertOne(newItem);
+
+        //delete item from unfinished database
+          const unfinished = mongodb.db('createdPlaylistsDatabase').collection('unfinishedPlaylistsCollection');
+          unfinished.deleteOne({ "receiver" : "my id", "sender": "friend id1" });
+      });
+
+}
+
 
 function fixPath(path) {
     _.each(path, function(artist) {
@@ -684,34 +730,10 @@ function addNavigation() {
     );
 }
 
-function clickGo() {
+function clickGo(dest) {
   clearSkips();
-  generatePath();
+  generatePath(dest);
   alert("Worked!");
-  //add new item to finished database, both directions (sender and receiver both ppl?idk)
-  login('katherine.barbano@duke.edu', 'HackDuke2020').then(() => {
-    const appId = 'antiracistplaylist-qvlud';
-    const stitchClient = Stitch.hasAppClient(appId)
-    ? Stitch.getAppClient(appId)
-    : Stitch.initializeDefaultAppClient(appId);
-        
-    // Initialize a MongoDB Service Client
-    const mongodb = stitchClient.getServiceClient(
-        RemoteMongoClient.factory,
-        'mongodb-atlas'
-      );
-  
-          // Get a hook to the employees collection
-          const finished = mongodb.db('createdPlaylistsDatabase').collection('finishedPlaylistsCollection');
-  
-          //add path in here
-          const newItem = {
-              "my_id": "my id",
-              "friend_id": "friend id",
-          };
-          finished.insertOne(newItem);
-      });
-  //delete item from unfinished database
 }
 
 function login(email, password) {
