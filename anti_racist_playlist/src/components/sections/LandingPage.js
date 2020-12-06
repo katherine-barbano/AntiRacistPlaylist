@@ -4,6 +4,7 @@ import { SectionProps } from '../../utils/SectionProps';
 import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
 import history from '../../utils/History';
+
 const propTypes = {
   ...SectionProps.types
 }
@@ -66,7 +67,7 @@ const Hero = ({
                     <Button tag="a" color="dark" wideMobile variant="btn btn-success" onClick={() => history.push('/Playlists')}>
                     View my playlists
                     </Button>
-                   
+                  
 
                 </ButtonGroup>
               </div>
@@ -82,3 +83,5 @@ Hero.propTypes = propTypes;
 Hero.defaultProps = defaultProps;
 
 export default Hero;
+
+
