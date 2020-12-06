@@ -92,8 +92,18 @@ function doit() {
 	});
 
 
-g_name = localStorage.getItem('createplaylist-name');
-  var g_tracks = JSON.parse(localStorage.getItem('createplaylist-tracks'));
+g_name = "my anti-racist playlist <3"
+	var g_tracks =[
+]
+
+	g_tracks = ['spotify:track:0HB9QK0Eraem2k4JmR6ZWs',
+		'spotify:track:3f42pE8qk77OFz6blNNVEP',
+		'spotify:track:5kRBzRZmZTXVg8okC7SJFZ',
+		'spotify:track:7z4mcKCYFPgqFeYS5mNyTB',
+		'spotify:track:5GUZfJ58XYGTMrnciBF0Xr',
+		'spotify:track:249gnXrbfmV8NG6jTEMSwD',
+		'spotify:track:0AiTIiCQ15NW8QHQwSxKuR'
+		 ]
 
 	console.log('got args', args);
 
